@@ -1,0 +1,19 @@
+aiAgent:
+  image:
+    repository: ghcr.io/rancher-sandbox/rancher-ai-agent
+    tag: v0.1.1-alpha.15
+    pullPolicy: IfNotPresent
+mcp:
+  image:
+    repository: ghcr.io/rancher-sandbox/rancher-ai-mcp
+    tag: v0.0.1-alpha.25
+    pullPolicy: IfNotPresent
+llmModel: "gpt-oss:20b"
+ollamaUrl: "http://10.9.0.113:31434/"
+activeLlm: "ollama"
+rag:
+    enabled: true
+    embeddings_model: "qwen3-embedding:4b"
+langfuseHost: https://kclangfuse.ngrok.app
+langfusePublicKey: pk-lf-6ed2b517-1aef-49f2-840d-779470c4c910
+langfuseSecretKey: sk-lf-78ca3d00-fc9d-431c-a827-4bc2a9a1e8f2

@@ -1,0 +1,28 @@
+aiAgent:
+  image:
+    repository: ghcr.io/rancher-sandbox/rancher-ai-agent
+    tag: v0.1.1-alpha.15
+    pullPolicy: IfNotPresent
+mcp:
+  image:
+    repository: ghcr.io/rancher-sandbox/rancher-ai-mcp
+    tag: v0.0.1-alpha.25
+    pullPolicy: IfNotPresent
+llmModel: "gpt-oss:20b"
+ollamaUrl: "http://10.9.0.113:31434/"
+googleApiKey:
+openaiApiKey:
+openaiUrl:
+activeLlm: ollama # ollama, gemini, openai
+# Enable RAG with embedded rancher documentation
+rag:
+    enabled: true
+    embeddings_model: "qwen3-embedding:4b"
+    pvc:
+langfuseSecretKey:
+langfusePublicKey:
+langfuseHost:
+insecureSkipTls: false
+log:
+  level: info
+~
