@@ -3,8 +3,11 @@
 Rancher AI installed in the `local` Cluster. This allows you Rancher AI to see all downstream clusters.
 
 To install and setup SUSE Rancher AI Rancher cluster with Rancher 2.13.x installed.
-If you cluster in pre-2.13 you need to complete additional steps
+If you cluster in pre-2.13 you need to complete additional steps.
 
+Before the install, you need to create a values.yaml file with you deployment specific information.
+
+For details on how to create you values.yaml in sample-values/README.md
 
 ## Install Rancher-AI Agent
 ```Setup Repo
@@ -18,8 +21,17 @@ helm install rancher-ai-agent rancher-ai/agent   --namespace cattle-ai-agent-sys
 
 ## View Deployments
 
+Check the status of the Rancher AI Agent. There are 2 pods that are deployed to the `cattle-ai-agent-system`
 
+### View the `rancher-mcp-server`
 
+![View MCP](/assets/mcp-log.png)
+
+### View the `racher-ai-agent` log
+
+If you deployed the `enabled` the `RAG` watch the logs until you see `Uvicorn running on http://0.0.0.0:8000`
+
+![View MCP](/assets/rancher-ai-agent-log.gif)
 
 
 # Setup up backend
@@ -47,11 +59,15 @@ https://lajoie.de/blog2/index.html
 
 ## rancher-ai-agent on Github
 
-https://github.com/rancher-sandbox/rancher-ai-agent/releases
+[text](https://github.com/rancher-sandbox/rancher-ai-agent)
+
+## Rancher MCP
+
+[text](https://github.com/rancher-sandbox/rancher-ai-mcp)
 
 ## rancher-ai-ui on Github
 
-https://github.com/torchiaf/rancher-ai-ui
+[text](https://github.com/torchiaf/rancher-ai-ui)
 
 ## SUSE® Rancher Prime: AI - Assistant Early Adopters Program
 

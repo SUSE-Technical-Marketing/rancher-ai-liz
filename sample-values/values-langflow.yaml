@@ -8,9 +8,9 @@ mcp:
     repository: ghcr.io/rancher-sandbox/rancher-ai-mcp
     tag: v0.0.1-alpha.25
     pullPolicy: IfNotPresent
+activeLlm: "ollama"
 llmModel: "gpt-oss:20b"
 ollamaUrl: "http://10.9.0.113:31434/"
-activeLlm: "ollama"
 rag:
     enabled: true
     embeddings_model: "qwen3-embedding:4b"
