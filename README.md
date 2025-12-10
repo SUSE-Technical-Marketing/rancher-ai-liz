@@ -10,6 +10,10 @@
 
 # Links
 
+## Rancher-AI Quickstart
+
+https://drive.google.com/file/d/1dGjTnJsk4RWv_aqAMUhHiH3BEocmG-8F/view
+
 ## Installing NVIDIA drivers
 
 https://github.com/SUSE-Technical-Marketing/suse-ai-demo/blob/main/install/Install-NVIDIA-drivers.md
@@ -31,6 +35,6 @@ https://github.com/torchiaf/rancher-ai-ui
 
 https://drive.google.com/file/d/1lXopcOwL5hWHJSkQkUKoDxmnqwEuCSfF/
 
-## SUSERancher Prime: AI Assistant Liz Deck
+## SUSE Rancher Prime: AI Assistant Liz Deck
 
 https://docs.google.com/presentation/d/19DlHhFwW0RBf1BFcYRZW1BKGfZKknAGpluINRMGXe30/edit?slide=id.g34098e29a71_0_6#slide=id.g34098e29a71_0_6
