@@ -1,5 +1,27 @@
 # Install and setting up Rancher AI
 
+Rancher AI installed in the `local` Cluster. This allows you Rancher AI to see all downstream clusters.
+
+To install and setup SUSE Rancher AI Rancher cluster with Rancher 2.13.x installed.
+If you cluster in pre-2.13 you need to complete additional steps
+
+
+## Install Rancher-AI Agent
+```Setup Repo
+helm repo add rancher-ai https://rancher-sandbox.github.io/rancher-ai-agent
+helm refresh
+```
+
+```Install Rancher AI Agent
+helm install rancher-ai-agent rancher-ai/agent   --namespace cattle-ai-agent-system   --create-namespace   --devel   -f values.yaml
+```
+
+## View Deployments
+
+
+
+
+
 # Setup up backend
 
 ## Ollama
