@@ -66,22 +66,14 @@ See [sample-values/README.md](sample-values/README.md) for configuration details
 
 For demo scenarios and broken deployments to test Rancher AI's capabilities, see [demo/Demos.md](demo/Demos.md)
 
-# Links
+# Links for Rancher AI
 
 ## Rancher-AI Quickstart
 
 https://drive.google.com/file/d/1dGjTnJsk4RWv_aqAMUhHiH3BEocmG-8F/view
 
-## Installing NVIDIA drivers
 
-https://github.com/SUSE-Technical-Marketing/suse-ai-demo/blob/main/install/Install-NVIDIA-drivers.md
-
-## SUSE AI on SLES 16
-
-https://lajoie.de/blog2/index.html
-
-
-## rancher-ai-agent on GitHub
+## Rancher Ai Agent on GitHub
 
 [Rancher AI Agent Repository](https://github.com/rancher-sandbox/rancher-ai-agent)
 
@@ -100,3 +92,17 @@ https://drive.google.com/file/d/1lXopcOwL5hWHJSkQkUKoDxmnqwEuCSfF/
 ## SUSE Rancher Prime: AI Assistant Liz Deck
 
 https://docs.google.com/presentation/d/19DlHhFwW0RBf1BFcYRZW1BKGfZKknAGpluINRMGXe30/edit?slide=id.g34098e29a71_0_6#slide=id.g34098e29a71_0_6
+
+# Links for Setting up NVIDIA drivers
+
+## Installing NVIDIA drivers
+
+https://github.com/SUSE-Technical-Marketing/suse-ai-demo/blob/main/install/Install-NVIDIA-drivers.md
+
+## SUSE AI on SLES 16
+
+https://lajoie.de/blog2/index.html
+
+## Setting up Timeslicing for a NVIDIA GPU
+
+https://github.com/SUSE-Technical-Marketing/suse-ai-demo/blob/main/install/Enable-vGPU-Timeslicing.md
