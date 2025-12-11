@@ -36,7 +36,7 @@ Check the status of the Rancher AI Agent. There are 2 pods that are deployed to 
 
 ### View the `rancher-ai-agent` log
 
-If you enabled RAG, watch the logs until you see `Uvicorn running on http://0.0.0.0:8000`
+If you enabled RAG it takes ~3 mins to build the RAG DB, watch the logs until you see `Uvicorn running on http://0.0.0.0:8000`
 
 ![View Rancher AI Agent Log](assets/rancher-ai-agent-log.gif)
 
