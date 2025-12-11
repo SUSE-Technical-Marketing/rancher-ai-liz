@@ -1,14 +1,14 @@
-# Example Values.yaml
+# Example values.yaml
 
-You need to create a values.yaml to define how your Rancher AI will interact with your system.
+You need to create a `values.yaml` file to define how your Rancher AI will interact with your system.
 
-In this folder you will see examples for various configuration. Below is the vaules-full.yaml
+In this folder you will see examples for various configurations. Below is detailed information about the `values-full.yaml` options.
 
 ## Agents
 
-The first 2 sections allow us to override the default `aiAgent` and the `mcp` server. This is really just needed when we are in the development of `Rancher AI`
+The first two sections allow you to override the default `aiAgent` and `mcp` server images. This is typically only needed during development of Rancher AI.
 
-You can find the latest version of both of these modules by going to following urls
+You can find the latest versions of both modules at the following URLs:
 
 ### Rancher aiAgent
 
@@ -31,81 +31,116 @@ mcp:
     pullPolicy: IfNotPresent
 ```
 
-## active LLM
+## Active LLM
 
-This section allows you to specify which LLM you will be using.
+This section allows you to specify which LLM backend you will be using.
 
-### ollama
+### Ollama
 
-`ollama` - use a self hosted ollama server. Note, depending on what model you are using (or if you are using the RAG option) you will need to use the upstream version of ollama rather than the version that is currently in Application Collection
+`ollama` - Use a self-hosted Ollama server. Depending on which model you are using (or if you are using the RAG option), you may need to use the upstream version of Ollama rather than the version currently in the Application Collection.
 
-You will specify your ollama server with this option
+Specify your Ollama server with this option:
 
-```
+```yaml
+activeLLM: ollama
 ollamaUrl: "http://10.9.0.113:31434/"
 ```
 
+For setup instructions, see [../config-ollama/README.md](../config-ollama/README.md)
+
 ### Google Gemini
 
-`gemini` - This allows you to use a Google Gemini account. You will need a `gemini API` that is linked to your google account.
+`gemini` - Use a Google Gemini account. You will need a Gemini API key linked to your Google account.
 
-You will need to specify your Google API Key
+```yaml
+activeLLM: gemini
+googleApiKey: "your-api-key-here"
+```
 
-```
-googleApiKey:
-```
 ### OpenAI
 
-`openai` - This option allows you to use a OpenAI account instead of hosting your own ollama. You will need and `OpenAI API`  
+`openai` - Use an OpenAI account instead of hosting your own Ollama. You will need an OpenAI API key.
 
-Top use OpenAI you will need to specify your `OpenAI API` and your `OpenAI URL`
+To use OpenAI, specify your OpenAI API key and URL:
 
+```yaml
+activeLLM: openai
+openaiApiKey: "your-api-key-here"
+openaiUrl: "https://api.openai.com/v1"
 ```
-openaiApiKey:
-openaiUrl:
+## Specify Model to Use
+
+You need to specify which model to use. Ensure that the model you specify is ready and loaded on your `activeLLM`.
+
+If you are using Ollama, you will need to pull the model first. For example:
+
+```bash
+ollama pull gpt-oss:20b
 ```
-## Specify Model to use
 
-You need to specify the model that use. You need to ensure that the model you specify is ready and loaded on your `activeLLM`.
+Then specify it in your values.yaml:
 
-This means that if you are using ollama, you will need to issue any commands needed to load the model. For example with Ollama you will need to do an `ollama pull gpt-oss:20b`
-
-```
+```yaml
 llmModel: "gpt-oss:20b"
 ```
-Models that I have used and tested on my NVIDIA 4090
 
+### Tested Models (NVIDIA 4090)
+
+| Model | VRAM Usage |
+|-------|------------|
+| gpt-oss:20b | 14GB |
+| qwen3:14b | 9.3GB |
+| qwen3:8b | 5.2GB |
+| llama3.1:8b | 4.9GB |
+
+## Enable RAG with Embedded Rancher Documentation
+
+When you enable the RAG (Retrieval-Augmented Generation) option, the AI Agent will create a RAG database in the Rancher AI Agent pod and load Rancher documentation. This option uses the `qwen3-embedding:4b` model (2.5GB).
+
+If you enable this option, ensure the embedding model is available in your LLM:
+
+```bash
+ollama pull qwen3-embedding:4b
 ```
-gpt-oss:20b - 14GB
-qwen3:14b.  - 9.3GB
-qwen3:8b    - 5.2Gb
-llama3.1:8b - 4.9GB
-```
 
-## Enable RAG with embedded rancher documentation
+Then configure it in your values.yaml:
 
-When you enable the RAG option, when the AI Agent loads, it will create a RAG database in the Rancher AI Agent pod and load a bunch of documents. This option leverages the `qwen3-embedding:4b` model (2.5GB).
-
-If you enable this option ensure that you have made the model available in LLM (I.E. `ollama pull qwen3-embedding:4b`)
-
-```
+```yaml
 rag:
-    enabled: true
-    embeddings_model: "qwen3-embedding:4b"
-    pvc:
+  enabled: true
+  embeddings_model: "qwen3-embedding:4b"
+  pvc:
+    # Optional: specify PVC configuration for persistent storage
 ```
 
 ## Langfuse
 
-Langfuse is an open-source LLM (Large Language Model) engineering platform for observability, debugging, evaluation, and prompt management
+[Langfuse](https://langfuse.com/) is an open-source LLM engineering platform for observability, debugging, evaluation, and prompt management.
 
+To enable Langfuse integration, configure your API keys:
+
+```yaml
+langfuseSecretKey: "your-secret-key"
+langfusePublicKey: "your-public-key"
+langfuseHost: "https://cloud.langfuse.com"  # or your self-hosted instance
 ```
-langfuseSecretKey:
-langfusePublicKey:
-langfuseHost:
-```
-## Set the Log level 
-```
+
+## Set the Log Level
+
+Control the verbosity of Rancher AI logs:
+
+```yaml
 log:
-  level: info
+  level: info  # Options: debug, info, warning, error
 ```
+
+## Example Configuration Files
+
+This directory contains several example configuration files:
+
+- **values-full.yaml** - Complete example with all options
+- **values-ollama.yaml** - Configuration for Ollama backend
+- **values-openai.yaml** - Configuration for OpenAI backend
+- **values-langflow.yaml** - Configuration with Langfuse integration
+
+Choose the example that best matches your setup and customize it with your specific values.

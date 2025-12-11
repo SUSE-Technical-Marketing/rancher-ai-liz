@@ -1,46 +1,70 @@
-# Install and setting up Rancher AI
+# Install and Setup Rancher AI
 
-Rancher AI installed in the `local` Cluster. This allows you Rancher AI to see all downstream clusters.
+Rancher AI should be installed in the `local` cluster. This allows Rancher AI to see all downstream clusters.
 
-SUSE Rancher AI Rancher requires a cluster with Rancher 2.13.x installed.
-If you cluster in pre-2.13 you need to complete additional steps.
+SUSE Rancher AI requires a cluster with Rancher 2.13.x installed.
+If your cluster is pre-2.13, you need to complete additional steps.
 
-Before the install, you need to create a values.yaml file with you deployment specific information.
+Before the install, you need to create a values.yaml file with your deployment-specific information.
 
-For details on how to create you values.yaml in sample-values/README.md
+For details on how to create your values.yaml, see [sample-values/README.md](sample-values/README.md)
 
 ## Install Rancher-AI Agent
-```Setup Repo
+
+### Setup Helm Repository
+```bash
 helm repo add rancher-ai https://rancher-sandbox.github.io/rancher-ai-agent
-helm refresh
+helm repo update
 ```
 
-```Install Rancher AI Agent
-helm install rancher-ai-agent rancher-ai/agent   --namespace cattle-ai-agent-system   --create-namespace   --devel   -f values.yaml
+### Install Rancher AI Agent
+```bash
+helm install rancher-ai-agent rancher-ai/agent \
+  --namespace cattle-ai-agent-system \
+  --create-namespace \
+  --devel \
+  -f values.yaml
 ```
 
 ## View Deployments
 
-Check the status of the Rancher AI Agent. There are 2 pods that are deployed to the `cattle-ai-agent-system`
+Check the status of the Rancher AI Agent. There are 2 pods that are deployed to the `cattle-ai-agent-system` namespace.
 
 ### View the `rancher-mcp-server`
 
-![View MCP](/assets/mcp-log.png)
+![View MCP](assets/mcp-log.png)
 
-### View the `racher-ai-agent` log
+### View the `rancher-ai-agent` log
 
-If you deployed the `enabled` the `RAG` watch the logs until you see `Uvicorn running on http://0.0.0.0:8000`
+If you enabled RAG, watch the logs until you see `Uvicorn running on http://0.0.0.0:8000`
 
-![View MCP](/assets/rancher-ai-agent-log.gif)
+![View Rancher AI Agent Log](assets/rancher-ai-agent-log.gif)
 
 
-# Setup up backend
+# Setup Backend
 
 ## Ollama
 
-## openAI
+For setting up a self-hosted Ollama backend, see [config-ollama/README.md](config-ollama/README.md)
+
+## OpenAI
+
+To use OpenAI as your backend, you'll need:
+- An OpenAI API key
+- To specify the OpenAI URL in your values.yaml
+
+See [sample-values/README.md](sample-values/README.md) for configuration details.
+
+## Google Gemini
+
+To use Google Gemini as your backend, you'll need:
+- A Gemini API key linked to your Google account
+
+See [sample-values/README.md](sample-values/README.md) for configuration details.
 
 # Demoing Rancher AI
+
+For demo scenarios and broken deployments to test Rancher AI's capabilities, see [demo/Demos.md](demo/Demos.md)
 
 # Links
 
@@ -57,17 +81,17 @@ https://github.com/SUSE-Technical-Marketing/suse-ai-demo/blob/main/install/Insta
 https://lajoie.de/blog2/index.html
 
 
-## rancher-ai-agent on Github
+## rancher-ai-agent on GitHub
 
-[text](https://github.com/rancher-sandbox/rancher-ai-agent)
+[Rancher AI Agent Repository](https://github.com/rancher-sandbox/rancher-ai-agent)
 
 ## Rancher MCP
 
-[text](https://github.com/rancher-sandbox/rancher-ai-mcp)
+[Rancher AI MCP Repository](https://github.com/rancher-sandbox/rancher-ai-mcp)
 
-## rancher-ai-ui on Github
+## rancher-ai-ui on GitHub
 
-[text](https://github.com/torchiaf/rancher-ai-ui)
+[Rancher AI UI Repository](https://github.com/torchiaf/rancher-ai-ui)
 
 ## SUSE® Rancher Prime: AI - Assistant Early Adopters Program
 
