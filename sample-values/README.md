@@ -1,3 +1,5 @@
+# Example Values.yaml
+
 You need to create a values.yaml to define how your Rancher AI will interact with your system.
 
 In this folder you will see examples for various configuration. Below is the vaules-full.yaml

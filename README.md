@@ -2,7 +2,7 @@
 
 Rancher AI installed in the `local` Cluster. This allows you Rancher AI to see all downstream clusters.
 
-To install and setup SUSE Rancher AI Rancher cluster with Rancher 2.13.x installed.
+SUSE Rancher AI Rancher requires a cluster with Rancher 2.13.x installed.
 If you cluster in pre-2.13 you need to complete additional steps.
 
 Before the install, you need to create a values.yaml file with you deployment specific information.
