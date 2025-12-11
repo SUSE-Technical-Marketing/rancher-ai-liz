@@ -93,6 +93,14 @@ llmModel: "gpt-oss:20b"
 | qwen3:8b | 5.2GB |
 | llama3.1:8b | 4.9GB |
 
+## Enable Insecure Rancher instance.
+
+If you Rancher Cluster does not have a proper SSL certificate, change this value to `true`
+
+```
+insecureSkipTls: false
+```
+
 ## Enable RAG with Embedded Rancher Documentation
 
 When you enable the RAG (Retrieval-Augmented Generation) option, the AI Agent will create a RAG database in the Rancher AI Agent pod and load Rancher documentation. This option uses the `qwen3-embedding:4b` model (2.5GB).
@@ -115,14 +123,14 @@ rag:
 
 ## Langfuse
 
-[Langfuse](https://langfuse.com/) is an open-source LLM engineering platform for observability, debugging, evaluation, and prompt management.
+[Langfuse](https://langfuse.com/) is an open-source LLM engineering platform for observability, debugging, evaluation, and prompt management. This allows our developers to log and track the questions and the responses. 
 
 To enable Langfuse integration, configure your API keys:
 
 ```yaml
 langfuseSecretKey: "your-secret-key"
 langfusePublicKey: "your-public-key"
-langfuseHost: "https://cloud.langfuse.com"  # or your self-hosted instance
+langfuseHost: "https://cloud.langfuse.com"  
 ```
 
 ## Set the Log Level
