@@ -65,8 +65,6 @@ From the Rancher UI, view the Ollama pod by going to **Workload → Pods** and s
 To pull models, execute commands in the pod's shell:
 
 ```bash
-ollama pull llama3.1:8b
-ollama pull qwen3:8b
 ollama pull gpt-oss:20b
 # For RAG embedding support
 ollama pull qwen3-embedding:4b
