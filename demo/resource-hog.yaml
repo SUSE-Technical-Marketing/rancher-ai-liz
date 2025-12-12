@@ -22,8 +22,8 @@ spec:
           # This tells Kubernetes: "Do not schedule me unless you can guarantee
           # I have this much capacity reserved just for me."
           requests:
-            cpu: "1000m"  # 1 Full Core (Overkill for idle Nginx)
-            memory: "1Gi" # 1 Gigabyte (Overkill for idle Nginx)
+            cpu: "2000m"  # 1 Full Core (Overkill for idle Nginx)
+            memory: "2Gi" # 1 Gigabyte (Overkill for idle Nginx)
           
           # RESOURCE LIMITS:
           # This tells Kubernetes: "Kill me if I try to go above this amount."
