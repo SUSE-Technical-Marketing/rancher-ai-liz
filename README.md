@@ -41,6 +41,30 @@ If you enabled RAG it takes ~3 mins to build the RAG DB, watch the logs until yo
 ![View Rancher AI Agent Log](assets/rancher-ai-agent-log.gif)
 
 
+# Install UI Extension
+
+## Add the Rancher UI Repo
+
+1) On Rancher Manager, click on Extension in the menu bar.
+2) Use the three-dot menu in the upper right and select 'Manage Repositories'
+3) Click 'Create' to add the repository
+4) Configure the repository:
+    
+    1) name: ai-assistant-ui
+    2) target: Git repository containing Helm chart or cluster template definitions
+    3) index URL: https://github.com/rancher-sandbox/rancher-ai-ui
+    4) Git Branch: gh-pages
+
+![View Rancher AI Agent Log](assets/add-rancher-ai-repo.gif)
+
+## Add the Rancher UI Plugin
+
+1) Select the Globe Icon on the lower left to add the UI Plugin
+
+2) Select the `AI Assistant`
+
+![View Rancher AI Agent Log](assets/add-rancher-ai-ui-plugin.gif)
+
 # Setup Backend
 
 ## Ollama
