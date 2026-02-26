@@ -13,7 +13,7 @@ For details on how to create your values.yaml, see [sample-values/README.md](sam
 
 ### Setup Helm Repository
 ```bash
-helm repo add rancher-ai https://rancher-sandbox.github.io/rancher-ai-agent
+helm repo add rancher-ai https://rancher.github.io/rancher-ai-agent
 helm repo update
 ```
 
