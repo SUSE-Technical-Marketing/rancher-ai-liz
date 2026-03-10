@@ -90,6 +90,38 @@ See [sample-values/README.md](sample-values/README.md) for configuration details
 
 For demo scenarios and broken deployments to test Rancher AI's capabilities, see [demo/Demos.md](demo/Demos.md)
 
+# Testing Rancher AI
+
+The `test/` directory contains an automated test suite for benchmarking Liz across different LLM models. It measures **time to first token (TTFT)**, **total response time**, and captures full response text for quality review.
+
+## Quick start
+
+```bash
+cd test/
+pip install -r requirements.txt
+
+# Run all tests against the current model
+python liz-test.py --label "model-name"
+
+# View results as an HTML report
+python report.py
+```
+
+## Typical workflow when evaluating a new model
+
+```bash
+# 1. Switch the model
+./set-model.sh --model llama3.3:70b
+
+# 2. Run the test suite
+python liz-test.py --label "llama3.3-70b"
+
+# 3. Compare against a previous run
+python report.py results/baseline results/llama3.3-70b
+```
+
+For full details see [test/README.md](test/README.md).
+
 # Links for Rancher AI
 
 ## Rancher-AI Quickstart

@@ -1,0 +1,125 @@
+# Liz AI Agent Test Configuration
+# Run with: python liz-test.py --label "my-model-name"
+
+# Rancher API token - auto-read from ~/.kube/liz.yaml if not set here.
+# Override with: LIZ_TOKEN=<token> python liz-test.py
+# token: ""
+
+# Agent identifier (from AIAgentConfig CRD name)
+agent_id: rancher
+
+# Default number of times to run each question (for consistency testing)
+default_repetitions: 3
+
+# Seconds to wait between queries in the same test (avoid overwhelming the agent)
+delay_between_queries: 2
+
+# Downstream cluster ID for the dev-ai cluster
+# context fields get injected as MCP tool call hints
+_dev_ai_cluster: &dev_ai c-m-hwwjl7rc
+
+tests:
+  # ── General capability ──────────────────────────────────────────────────────
+
+  - name: general-hello
+    message: "Hello, what can you help me with?"
+    repetitions: 2
+
+  - name: list-clusters
+    message: "What clusters do you see?"
+    repetitions: 2
+
+  # ── Broken namespace: overview ───────────────────────────────────────────────
+
+  - name: broken-namespace-overview
+    message: "What deployments are failing in the broken namespace? Give me a summary of all the issues."
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+    repetitions: 3
+
+  # ── Broken namespace: individual diagnosis ───────────────────────────────────
+
+  - name: crash-loop-diagnosis
+    message: "Why is the crash-loop-deployment failing? What is the root cause?"
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+      deploymentName: crash-loop-deployment
+    repetitions: 3
+
+  - name: broken-image-diagnosis
+    message: "What is wrong with the broken-image-deployment? Why can't it start?"
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+      deploymentName: broken-image-deployment
+    repetitions: 3
+
+  - name: impossible-schedule-diagnosis
+    message: "Why is the impossible-schedule-deployment stuck in Pending? What is preventing it from scheduling?"
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+      deploymentName: impossible-schedule-deployment
+    repetitions: 3
+
+  - name: missing-config-diagnosis
+    message: "What is causing the missing-config-deployment to fail to start?"
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+      deploymentName: missing-config-deployment
+    repetitions: 3
+
+  - name: readonly-filesystem-diagnosis
+    message: "Why is the readonly-write-deployment crashing? Investigate the root cause."
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+      deploymentName: readonly-write-deployment
+    repetitions: 3
+
+  - name: bad-probe-diagnosis
+    message: "Why is the bad-probe-deployment failing? Investigate and explain the root cause."
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+      deploymentName: bad-probe-deployment
+    repetitions: 3
+
+  # ── Resource analysis ────────────────────────────────────────────────────────
+
+  # Broad version: tests whether the model can discover the problem on its own
+  - name: resource-rightsizing-broad
+    message: "Look at all the deployments in the broken namespace and compare their requested CPU and memory resources against their actual usage. Which ones are over-provisioned? What would you recommend changing the requests and limits to in order to save resources?"
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+    repetitions: 3
+
+  # Focused version: tests accuracy of the recommendation given the right target
+  - name: resource-rightsizing-focused
+    message: "For each deployment in the broken namespace that is currently running, get its pod metrics and compare the requested CPU and memory against actual usage. For any deployment that is over-provisioned, provide specific recommended values for requests and limits based on the actual usage."
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+    repetitions: 3
+
+  # ── Fix suggestions ──────────────────────────────────────────────────────────
+
+  - name: fix-crash-loop
+    message: "How do I fix the crash-loop-deployment?"
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+      deploymentName: crash-loop-deployment
+    repetitions: 2
+
+  - name: fix-broken-image
+    message: "How do I fix the broken-image-deployment? What should I change?"
+    context:
+      clusterId: c-m-hwwjl7rc
+      namespace: broken
+      deploymentName: broken-image-deployment
+    repetitions: 2
