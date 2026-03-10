@@ -13,7 +13,7 @@ For details on how to create your values.yaml, see [sample-values/README.md](sam
 
 ### Setup Helm Repository
 ```bash
-helm repo add rancher-ai https://rancher-sandbox.github.io/rancher-ai-agent
+helm repo add rancher-ai https://rancher.github.io/rancher-ai-agent
 helm repo update
 ```
 
@@ -52,7 +52,7 @@ If you enabled RAG it takes ~3 mins to build the RAG DB, watch the logs until yo
     
     1) name: ai-assistant-ui
     2) target: Git repository containing Helm chart or cluster template definitions
-    3) index URL: https://github.com/rancher-sandbox/rancher-ai-ui
+    3) index URL: https://github.com/rancher/rancher-ai-ui
     4) Git Branch: gh-pages
 
 ![View Rancher AI Agent Log](assets/add-rancher-ai-repo.gif)
@@ -139,7 +139,7 @@ https://drive.google.com/file/d/1dGjTnJsk4RWv_aqAMUhHiH3BEocmG-8F/view
 
 ## rancher-ai-ui on GitHub
 
-[Rancher AI UI Repository](https://github.com/torchiaf/rancher-ai-ui)
+[Rancher AI UI Repository](https://github.com/rancher/rancher-ai-ui)
 
 ## SUSE® Rancher Prime: AI - Assistant Early Adopters Program
 
