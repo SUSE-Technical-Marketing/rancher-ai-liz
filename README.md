@@ -162,3 +162,7 @@ https://lajoie.de/blog2/index.html
 ## Setting up Timeslicing for a NVIDIA GPU
 
 https://github.com/SUSE-Technical-Marketing/suse-ai-demo/blob/main/install/Enable-vGPU-Timeslicing.md
+
+
+## Internal FAQ
+https://docs.google.com/document/d/1dRXugnUAu2_tBaBLYBht3hDGjKN9UpWYfetkGDtWA58/edit?tab=t.0
