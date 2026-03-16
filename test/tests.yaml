@@ -14,9 +14,19 @@ default_repetitions: 3
 # Seconds to wait between queries in the same test (avoid overwhelming the agent)
 delay_between_queries: 2
 
-# Downstream cluster ID for the dev-ai cluster
-# context fields get injected as MCP tool call hints
-_dev_ai_cluster: &dev_ai c-m-hwwjl7rc
+# ── Cluster / environment config ─────────────────────────────────────────────
+# Use the human-readable cluster display name — the runner resolves it to the
+# internal cluster ID automatically.
+# Find names with: kubectl --context=rancher get clusters.management.cattle.io
+cluster_id: &cluster_id dev-ai
+
+# Namespace where the broken test apps are deployed
+broken_ns: &broken_ns broken
+
+# Pre-built context blocks (referenced by tests below)
+_ctx_broken: &ctx_broken
+  clusterId: *cluster_id
+  namespace: *broken_ns
 
 tests:
   # ── General capability ──────────────────────────────────────────────────────
@@ -33,9 +43,7 @@ tests:
 
   - name: broken-namespace-overview
     message: "What deployments are failing in the broken namespace? Give me a summary of all the issues."
-    context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+    context: *ctx_broken
     repetitions: 3
 
   # ── Broken namespace: individual diagnosis ───────────────────────────────────
@@ -43,48 +51,42 @@ tests:
   - name: crash-loop-diagnosis
     message: "Why is the crash-loop-deployment failing? What is the root cause?"
     context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+      <<: *ctx_broken
       deploymentName: crash-loop-deployment
     repetitions: 3
 
   - name: broken-image-diagnosis
     message: "What is wrong with the broken-image-deployment? Why can't it start?"
     context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+      <<: *ctx_broken
       deploymentName: broken-image-deployment
     repetitions: 3
 
   - name: impossible-schedule-diagnosis
     message: "Why is the impossible-schedule-deployment stuck in Pending? What is preventing it from scheduling?"
     context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+      <<: *ctx_broken
       deploymentName: impossible-schedule-deployment
     repetitions: 3
 
   - name: missing-config-diagnosis
     message: "What is causing the missing-config-deployment to fail to start?"
     context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+      <<: *ctx_broken
       deploymentName: missing-config-deployment
     repetitions: 3
 
   - name: readonly-filesystem-diagnosis
     message: "Why is the readonly-write-deployment crashing? Investigate the root cause."
     context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+      <<: *ctx_broken
       deploymentName: readonly-write-deployment
     repetitions: 3
 
   - name: bad-probe-diagnosis
     message: "Why is the bad-probe-deployment failing? Investigate and explain the root cause."
     context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+      <<: *ctx_broken
       deploymentName: bad-probe-deployment
     repetitions: 3
 
@@ -93,17 +95,13 @@ tests:
   # Broad version: tests whether the model can discover the problem on its own
   - name: resource-rightsizing-broad
     message: "Look at all the deployments in the broken namespace and compare their requested CPU and memory resources against their actual usage. Which ones are over-provisioned? What would you recommend changing the requests and limits to in order to save resources?"
-    context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+    context: *ctx_broken
     repetitions: 3
 
   # Focused version: tests accuracy of the recommendation given the right target
   - name: resource-rightsizing-focused
     message: "For each deployment in the broken namespace that is currently running, get its pod metrics and compare the requested CPU and memory against actual usage. For any deployment that is over-provisioned, provide specific recommended values for requests and limits based on the actual usage."
-    context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+    context: *ctx_broken
     repetitions: 3
 
   # ── Fix suggestions ──────────────────────────────────────────────────────────
@@ -111,15 +109,13 @@ tests:
   - name: fix-crash-loop
     message: "How do I fix the crash-loop-deployment?"
     context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+      <<: *ctx_broken
       deploymentName: crash-loop-deployment
     repetitions: 2
 
   - name: fix-broken-image
     message: "How do I fix the broken-image-deployment? What should I change?"
     context:
-      clusterId: c-m-hwwjl7rc
-      namespace: broken
+      <<: *ctx_broken
       deploymentName: broken-image-deployment
     repetitions: 2

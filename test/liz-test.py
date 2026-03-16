@@ -59,6 +59,30 @@ WS_URL = (
 )
 
 
+def resolve_cluster_id(name_or_id: str) -> str:
+    """
+    If given a human cluster name (e.g. 'dev-ai'), look up the management cluster ID
+    (e.g. 'c-m-hwwjl7rc') from Rancher. If already an ID, return as-is.
+    """
+    if name_or_id.startswith("c-") or name_or_id == "local":
+        return name_or_id
+    try:
+        import subprocess
+        result = subprocess.run(
+            ["kubectl", f"--kubeconfig={KUBECONFIG}", f"--context={KUBE_CONTEXT}",
+             "get", "clusters.management.cattle.io",
+             "-o", "jsonpath={range .items[*]}{.metadata.name},{.spec.displayName}\\n{end}"],
+            capture_output=True, text=True, timeout=10
+        )
+        for line in result.stdout.splitlines():
+            cid, display = line.split(",", 1)
+            if display.lower() == name_or_id.lower():
+                return cid
+    except Exception:
+        pass
+    return name_or_id  # fall back to whatever was given
+
+
 def get_llm_config() -> dict:
     """Read current LLM config from the cluster configmap and secret."""
     try:
@@ -244,7 +268,9 @@ async def run_test_suite(config: dict, results_dir: Path, label: str = "", test_
         ttfts = []
         totals = []
 
-        test_context = test.get("context", {})
+        test_context = dict(test.get("context", {}))
+        if "clusterId" in test_context:
+            test_context["clusterId"] = resolve_cluster_id(test_context["clusterId"])
 
         for i in range(1, repetitions + 1):
             result = await run_query(token, message, test_agent_id, context=test_context)
